@@ -11,10 +11,10 @@ sys.setdefaultencoding('utf-8')
 
 #text command icon subtext
 
-def has_chinese_charactar(content):
+def has_greek_character(content):
     try:
         iconvcontent = unicode(content)
-        zhPattern = re.compile(u'[\u4e00-\u9fa5]+')
+        zhPattern = re.compile(u'[\u0370-\u03ff]+')
         match = zhPattern.search(iconvcontent)
         res = False
         if match:
@@ -24,12 +24,12 @@ def has_chinese_charactar(content):
         return True
 
 for i in range(1, len(sys.argv)):
-    if has_chinese_charactar(sys.argv[i]):
-        source_languege = "zh-CN"
+    if has_greek_character(sys.argv[i]):
+        source_languege = "el"
         target_languege = "en"
     else:
         source_languege = "en"
-        target_languege = "zh-CN"
+        target_languege = "el"
     url = 'http://translate.google.cn/translate_a/t'
     payload = {
         'client': 'p',
@@ -58,7 +58,7 @@ for i in range(1, len(sys.argv)):
             subtext = ''
             for tm in range(0, len(i['reverse_translation']) - 1):
                 subtext = subtext + i['reverse_translation'][tm] + ', '
-            subtext += i['reverse_translation'][-1] 
+            subtext += i['reverse_translation'][-1]
             print 'subtext=' + subtext
     else:
         for i in get_page['sentences']:
